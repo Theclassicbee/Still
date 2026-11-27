@@ -1,0 +1,438 @@
+/* ==========================================================================
+   Still — Cloud Backup Panel & Dark Mode Theme
+   ========================================================================== */
+
+.theme-toggle {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #e9eae3;
+  border-radius: 50%;
+  background: var(--surface);
+  color: #62675e;
+  font: 500 15px var(--sans);
+  cursor: pointer;
+  transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.2s, border-color 0.2s;
+}
+
+.theme-toggle:hover {
+  transform: rotate(-12deg) scale(1.06);
+  background: #f4f6f1;
+  border-color: #dfe5da;
+}
+
+.cloud-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 12px;
+  background: var(--surface);
+  border: 1px solid #e9eae3;
+  border-radius: 999px;
+  color: #62675e;
+  font: 500 12px var(--sans);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.cloud-action:hover {
+  background: #f4f6f1;
+  border-color: #dfe5da;
+  transform: translateY(-1px);
+}
+
+.cloud-btn-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #b8bcb2;
+  flex: none;
+}
+
+.cloud-action.connected {
+  color: #4c694d;
+  background: #f0f5ed;
+  border-color: #e2ebde;
+}
+
+.cloud-action.connected .cloud-btn-dot {
+  background: #6e956c;
+  box-shadow: 0 0 0 3px rgba(110, 149, 108, 0.16);
+}
+
+.google-g {
+  font: 700 13px Arial, sans-serif;
+  color: #fffef8;
+  letter-spacing: -0.4px;
+}
+
+.cloud-panel {
+  position: absolute;
+  z-index: 12;
+  right: 0;
+  top: 82px;
+  width: min(376px, calc(100vw - 32px));
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid #e8eae3;
+  border-radius: 20px;
+  box-shadow: 0 20px 55px rgba(48, 59, 42, 0.14);
+  animation: cloud-arrive 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.cloud-panel.hidden {
+  display: none;
+}
+
+@keyframes cloud-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(-7px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.cloud-panel-heading {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding-right: 22px;
+}
+
+.cloud-drive-mark {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: #eef3eb;
+  display: grid;
+  place-items: center;
+  color: var(--green);
+  font-size: 18px;
+  flex: none;
+}
+
+.cloud-panel-heading strong {
+  display: block;
+  font: 600 14px var(--display);
+  color: #3d443d;
+}
+
+.cloud-panel-heading p {
+  font-size: 12px;
+  color: #858a80;
+  margin: 3px 0 0;
+  line-height: 1.4;
+}
+
+.cloud-close {
+  position: absolute;
+  right: 13px;
+  top: 12px;
+  background: none;
+  border: 0;
+  font: 300 22px var(--sans);
+  color: #92968d;
+  cursor: pointer;
+}
+
+.cloud-status-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 0 11px;
+  color: #777c72;
+  font-size: 12px;
+}
+
+.cloud-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #b7b9b0;
+  flex: none;
+}
+
+.cloud-status-dot.connected {
+  background: #6e956c;
+  box-shadow: 0 0 0 3px rgba(110, 149, 108, 0.12);
+}
+
+.cloud-status-dot.error {
+  background: #bf7863;
+  box-shadow: 0 0 0 3px rgba(191, 120, 99, 0.14);
+}
+
+.cloud-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cloud-primary {
+  min-width: 0;
+  padding: 10px 16px;
+  font-size: 12px;
+}
+
+.cloud-panel .cloud-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.cloud-sync-button,
+.cloud-disconnect {
+  border: 0;
+  background: none;
+  color: #6c8067;
+  font: 500 12px var(--sans);
+  cursor: pointer;
+  padding: 8px 3px;
+}
+
+.cloud-disconnect {
+  color: #99978f;
+}
+
+.cloud-footnote,
+.cloud-setup-note {
+  font-size: 11px;
+  color: #8f9289;
+  line-height: 1.5;
+  margin: 11px 1px 0;
+}
+
+.cloud-footnote code,
+.cloud-setup-note code {
+  font-size: 10px;
+  background: #f2f3ee;
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+
+.cloud-local-section {
+  margin-top: 15px;
+  padding-top: 13px;
+  border-top: 1px solid #eceee8;
+}
+
+.cloud-local-section .mini-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 9px;
+}
+
+.cloud-local-actions {
+  display: flex;
+  gap: 8px;
+}
+
+@media (max-width: 760px) {
+  .cloud-panel {
+    top: 66px;
+    right: 0;
+  }
+
+  .streak-pill {
+    padding: 6px 9px;
+    gap: 5px;
+  }
+
+  .streak-word {
+    font-size: 10px;
+  }
+}
+
+/* ==========================================================================
+   Dark Mode Theme
+   ========================================================================== */
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #171c18;
+  --paper2: #202721;
+  --surface: #202621;
+  --ink: #e4e9e1;
+  --ink-soft: #b9c4b7;
+  --muted: #a0aa9f;
+  --line: #343e35;
+  --green: #9bb99a;
+  --green-dark: #c2d5be;
+  --mint: #2a392d;
+  --sage: #607b64;
+}
+
+html[data-theme="dark"] body {
+  background: radial-gradient(ellipse at 52% 15%, #202820 0%, #171c18 58%, #151a16 100%);
+}
+
+html[data-theme="dark"] .ambient-wash {
+  opacity: 0.1;
+}
+
+html[data-theme="dark"] .top-nav,
+html[data-theme="dark"] .mode-switch,
+html[data-theme="dark"] .view-tabs {
+  background: #171d18;
+}
+
+html[data-theme="dark"] .top-nav-item {
+  color: #9ba599;
+}
+
+html[data-theme="dark"] .top-nav-item.active,
+html[data-theme="dark"] .mode-tab.selected,
+html[data-theme="dark"] .view-tab.selected {
+  background: #303a31;
+  color: #d5e3d0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+html[data-theme="dark"] .streak-pill,
+html[data-theme="dark"] .cloud-action,
+html[data-theme="dark"] .theme-toggle {
+  background: #202721;
+  border-color: #354137;
+  color: #e4e9e1;
+}
+
+html[data-theme="dark"] .cloud-action:hover,
+html[data-theme="dark"] .theme-toggle:hover {
+  background: #29352b;
+  border-color: #465849;
+}
+
+html[data-theme="dark"] .cloud-action.connected {
+  background: #28382a;
+  border-color: #3b5140;
+  color: #c2d5be;
+}
+
+html[data-theme="dark"] .session-card,
+html[data-theme="dark"] .sound-card,
+html[data-theme="dark"] .heatmap-card,
+html[data-theme="dark"] .history-card,
+html[data-theme="dark"] .rhythm-stats > div {
+  background: #202621;
+  border-color: #303a31;
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.15);
+}
+
+html[data-theme="dark"] .intro-row h1,
+html[data-theme="dark"] .rhythm-header h1,
+html[data-theme="dark"] .section-heading h2,
+html[data-theme="dark"] .heatmap-top h2,
+html[data-theme="dark"] .history-card > strong {
+  color: #e4e9e1;
+}
+
+html[data-theme="dark"] .weekly-mini,
+html[data-theme="dark"] .practice-stats .today-mini {
+  border-color: #374138;
+}
+
+@media (max-width: 760px) {
+  html[data-theme="dark"] .practice-stats .weekly-mini,
+  html[data-theme="dark"] .practice-stats .today-mini {
+    background: #202621;
+    border-color: #303a31;
+  }
+}
+
+html[data-theme="dark"] .timer-halo {
+  background: radial-gradient(circle at 45% 38%, #344536 0%, #2b3a2d 48%, #263529 100%);
+  box-shadow: inset 0 3px 20px rgba(255, 255, 255, 0.05), 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+html[data-theme="dark"] .orbit { border-color: #88a287; }
+html[data-theme="dark"] .ring-track { stroke: rgba(209, 225, 204, 0.14); }
+html[data-theme="dark"] .ring-progress { stroke: #a6c3a1; }
+html[data-theme="dark"] .timer-readout { color: #e1e9dd; }
+html[data-theme="dark"] .timer-readout span { color: #9eb399; }
+
+html[data-theme="dark"] .stepper,
+html[data-theme="dark"] .secondary-button {
+  background: #252e27;
+  border-color: #3b483c;
+  color: #c0d2bc;
+}
+
+html[data-theme="dark"] .stepper:hover,
+html[data-theme="dark"] .secondary-button:hover,
+html[data-theme="dark"] .quick-times button:hover,
+html[data-theme="dark"] .quick-times button.active {
+  background: #314333;
+  border-color: #314333;
+  color: #d3e4cf;
+}
+
+html[data-theme="dark"] .quick-times button {
+  border-color: #364137;
+  color: #abb6a9;
+}
+
+html[data-theme="dark"] .primary-button {
+  background: #647e63;
+  color: #fcfff8;
+}
+
+html[data-theme="dark"] .primary-button:hover {
+  background: #789375;
+}
+
+html[data-theme="dark"] .sound-option { color: #e4e9e1; }
+html[data-theme="dark"] .sound-option:hover { background: #252e27; }
+html[data-theme="dark"] .sound-option.selected { background: #2b382d; border-color: #3c4b3d; }
+html[data-theme="dark"] .sound-symbol { background: #38352b; color: #d7bd8b; }
+html[data-theme="dark"] .sound-option:nth-child(2) .sound-symbol { background: #293838; color: #a7c6c4; }
+html[data-theme="dark"] .sound-option:nth-child(3) .sound-symbol { background: #3a3429; color: #d2b68b; }
+html[data-theme="dark"] .sound-option:nth-child(4) .sound-symbol { background: #302f3b; color: #b7b5d4; }
+html[data-theme="dark"] .sound-option:nth-child(5) .sound-symbol { background: #30352f; color: #b4baae; }
+html[data-theme="dark"] .sound-foot { border-color: #343e35; }
+html[data-theme="dark"] .chime-toggle { color: #b3bdb1; }
+
+html[data-theme="dark"] .bottom-nav {
+  background: rgba(32, 39, 33, 0.93);
+  border-color: #343e35;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+}
+
+html[data-theme="dark"] .nav-item.active {
+  background: #304031;
+  color: #d1e1cb;
+}
+
+html[data-theme="dark"] .heat-cell { background: #2b332c; }
+html[data-theme="dark"] .heat-cell[data-level="1"] { background: #405741; }
+html[data-theme="dark"] .heat-cell[data-level="2"] { background: #567452; }
+html[data-theme="dark"] .heat-cell[data-level="3"] { background: #71956b; }
+html[data-theme="dark"] .heat-cell[data-level="4"] { background: #9ab992; }
+html[data-theme="dark"] .heat-cell.today { outline-color: #bfd4b6; }
+html[data-theme="dark"] .week-day strong { color: #c5cec2; }
+html[data-theme="dark"] .rhythm-stats .stat-detail { color: #aab6a8; }
+
+html[data-theme="dark"] .toast {
+  background: #d9e6d6;
+  color: #202820;
+}
+
+html[data-theme="dark"] .cloud-panel {
+  background: #202721;
+  border-color: #364137;
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.5);
+}
+
+html[data-theme="dark"] .cloud-panel-heading strong { color: #e4e9e1; }
+html[data-theme="dark"] .cloud-panel-heading p,
+html[data-theme="dark"] .cloud-status-row { color: #b2bcb0; }
+html[data-theme="dark"] .cloud-drive-mark { background: #2d3b2e; }
+html[data-theme="dark"] .cloud-close { color: #a7b2a5; }
+html[data-theme="dark"] .cloud-sync-button,
+html[data-theme="dark"] .footer-links a { color: #b9d0b4; }
+html[data-theme="dark"] .cloud-footnote code,
+html[data-theme="dark"] .cloud-setup-note code { background: #303a31; color: #e4e9e1; }
+html[data-theme="dark"] .cloud-local-section { border-top-color: #343e35; }

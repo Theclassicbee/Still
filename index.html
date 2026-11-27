@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f8f8f5" />
+    <meta name="description" content="Still — a calm, private meditation timer, ambient soundscape, and practice tracker." />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Still" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <title>Still — a little space to breathe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./cloud.css" />
+  </head>
+  <body>
+    <div class="ambient-wash wash-one" aria-hidden="true"></div>
+    <div class="ambient-wash wash-two" aria-hidden="true"></div>
+
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" id="brand-home" href="#practice" aria-label="Still home">
+          <span class="brand-mark" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </span>
+          <span>still</span>
+        </a>
+
+        <nav class="top-nav" aria-label="Primary navigation">
+          <button class="top-nav-item active" type="button" data-view="practice-view">Practice</button>
+          <button class="top-nav-item" type="button" data-view="rhythm-view">Your rhythm</button>
+        </nav>
+
+        <div class="topbar-right">
+          <span class="today-label" id="today-label"></span>
+
+          <button
+            class="theme-toggle"
+            id="theme-toggle"
+            type="button"
+            aria-label="Switch to dark mode"
+            title="Toggle dark mode"
+          >
+            <span id="theme-icon" aria-hidden="true">☾</span>
+          </button>
+
+          <button
+            class="cloud-action"
+            id="cloud-action"
+            type="button"
+            aria-expanded="false"
+            aria-controls="cloud-panel"
+          >
+            <span class="cloud-btn-dot" id="cloud-btn-dot" aria-hidden="true"></span>
+            <span id="cloud-action-label">Backup</span>
+          </button>
+
+          <div class="streak-pill" title="Current meditation streak">
+            <span class="flame" aria-hidden="true">🔥</span>
+            <span id="streak-count">0</span>
+            <span class="streak-word">day streak</span>
+          </div>
+        </div>
+      </header>
+
+      <section class="cloud-panel hidden" id="cloud-panel" aria-label="Backup and sync">
+        <div class="cloud-panel-heading">
+          <div class="cloud-drive-mark" aria-hidden="true">☁</div>
+          <div>
+            <strong id="cloud-title">Back up your practice</strong>
+            <p id="cloud-description">Keep your meditation history safe across devices.</p>
+          </div>
+          <button class="cloud-close" id="cloud-close" type="button" aria-label="Close backup panel">×</button>
+        </div>
+
+        <div class="cloud-status-row">
+          <span class="cloud-status-dot" id="cloud-status-dot"></span>
+          <span id="cloud-status">Saved on this device only</span>
+        </div>
+
+        <div class="cloud-actions" id="google-cloud-actions">
+          <button class="primary-button cloud-primary" id="cloud-connect" type="button">
+            <span class="google-g" aria-hidden="true">G</span>
+            <span>Continue with Google</span>
+          </button>
+          <button class="cloud-sync-button hidden" id="cloud-sync" type="button">Sync now</button>
+          <button class="cloud-disconnect hidden" id="cloud-disconnect" type="button">Sign out</button>
+        </div>
+
+        <p class="cloud-footnote" id="cloud-footnote">
+          Google Drive sync saves a single <code>Still Meditation Backup.json</code> file and never reads your other files.
+        </p>
+
+        <p class="cloud-setup-note hidden" id="cloud-setup-note">
+          Google Drive sync is not configured for this deployment yet. You can still export or import your history below.
+        </p>
+
+        <div class="cloud-local-section">
+          <span class="mini-label">DEVICE BACKUP</span>
+          <div class="cloud-local-actions">
+            <button class="secondary-button small-btn" id="export-json" type="button">Export JSON</button>
+            <button class="secondary-button small-btn" id="import-json" type="button">Import JSON</button>
+            <input type="file" id="import-file" accept="application/json,.json" class="hidden" />
+          </div>
+        </div>
+      </section>
+
+      <section class="view active" id="practice-view" aria-labelledby="practice-title">
+        <div class="intro-row">
+          <div class="practice-intro">
+            <p class="eyebrow" id="greeting">A MOMENT FOR YOU</p>
+            <h1 id="practice-title">Come back to<br /><em>yourself.</em></h1>
+          </div>
+
+          <div class="practice-stats">
+            <div class="weekly-mini today-mini">
+              <span class="mini-label">TODAY</span>
+              <strong><span id="today-minutes">0</span><small> min</small></strong>
+              <span class="mini-caption" id="today-session-count">No sessions today</span>
+            </div>
+            <div class="weekly-mini">
+              <span class="mini-label">THIS WEEK</span>
+              <strong><span id="weekly-minutes">0</span><small> min</small></strong>
+              <span class="mini-caption" id="weekly-sessions">Sun–Sat practice</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="practice-layout">
+          <section class="session-card" aria-label="Meditation session">
+            <div class="mode-switch" role="tablist" aria-label="Session type">
+              <button class="mode-tab selected" type="button" data-mode="timer" role="tab" aria-selected="true">Timer</button>
+              <button class="mode-tab" type="button" data-mode="stopwatch" role="tab" aria-selected="false">Stopwatch</button>
+            </div>
+
+            <div class="timer-stage" id="timer-stage">
+              <div class="orbit orbit-one" aria-hidden="true"></div>
+              <div class="orbit orbit-two" aria-hidden="true"></div>
+              <div class="timer-halo" aria-hidden="true"></div>
+              <svg class="progress-ring" viewBox="0 0 260 260" aria-hidden="true">
+                <circle class="ring-track" cx="130" cy="130" r="118" />
+                <circle class="ring-progress" id="progress-ring" cx="130" cy="130" r="118" />
+              </svg>
+              <div class="timer-content">
+                <span class="timer-kicker" id="timer-kicker">A MOMENT OF STILLNESS</span>
+                <div class="timer-readout" id="timer-readout" aria-live="off">10<span>:</span>00</div>
+                <div class="timer-caption" id="timer-caption">Settle in, at your own pace</div>
+              </div>
+            </div>
+
+            <div class="duration-controls" id="duration-controls">
+              <button class="stepper" id="duration-minus" type="button" aria-label="Decrease by one minute">−</button>
+              <div class="duration-value">
+                <strong id="duration-label">10</strong>
+                <span>minutes</span>
+              </div>
+              <button class="stepper" id="duration-plus" type="button" aria-label="Increase by one minute">+</button>
+            </div>
+
+            <div class="quick-times" id="quick-times" aria-label="Quick duration presets">
+              <button type="button" data-minutes="5">5m</button>
+              <button type="button" data-minutes="10" class="active">10m</button>
+              <button type="button" data-minutes="15">15m</button>
+              <button type="button" data-minutes="20">20m</button>
+              <button type="button" data-minutes="30">30m</button>
+            </div>
+
+            <div class="session-actions">
+              <button class="primary-button" id="start-button" type="button">
+                <span class="button-icon" aria-hidden="true">▶</span>
+                <span>Begin session</span>
+              </button>
+              <button class="secondary-button hidden" id="pause-button" type="button">Pause</button>
+              <button class="text-button hidden" id="end-button" type="button">End session</button>
+            </div>
+          </section>
+
+          <aside class="sound-card" aria-label="Ambient soundscape">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">SET THE MOOD</p>
+                <h2>A little atmosphere</h2>
+              </div>
+              <button
+                class="sound-toggle muted"
+                id="sound-toggle"
+                type="button"
+                aria-label="Turn ambient sound on"
+                title="Toggle ambient sound"
+              >
+                <span class="sound-bars" aria-hidden="true">
+                  <i></i><i></i><i></i><i></i>
+                </span>
+              </button>
+            </div>
+
+            <div class="sound-list" id="sound-list" role="radiogroup" aria-label="Ambient sound selection">
+              <button class="sound-option selected" type="button" data-sound="morning" role="radio" aria-checked="true">
+                <span class="sound-symbol" aria-hidden="true">☼</span>
+                <span class="sound-copy">
+                  <strong>Morning garden</strong>
+                  <small>Birdsong · soft breeze</small>
+                </span>
+                <span class="sound-check" aria-hidden="true">✓</span>
+              </button>
+
+              <button class="sound-option" type="button" data-sound="river" role="radio" aria-checked="false">
+                <span class="sound-symbol" aria-hidden="true">⌁</span>
+                <span class="sound-copy">
+                  <strong>Quiet river</strong>
+                  <small>Water · gentle flow</small>
+                </span>
+                <span class="sound-check" aria-hidden="true">✓</span>
+              </button>
+
+              <button class="sound-option" type="button" data-sound="om" role="radio" aria-checked="false">
+                <span class="sound-symbol om-symbol" aria-hidden="true">ॐ</span>
+                <span class="sound-copy">
+                  <strong>Om resonance</strong>
+                  <small>Warm harmonic drone</small>
+                </span>
+                <span class="sound-check" aria-hidden="true">✓</span>
+              </button>
+
+              <button class="sound-option" type="button" data-sound="binaural" role="radio" aria-checked="false">
+                <span class="sound-symbol" aria-hidden="true">◒</span>
+                <span class="sound-copy">
+                  <strong>Binaural calm</strong>
+                  <small>Soft paired tones (headphones)</small>
+                </span>
+                <span class="sound-check" aria-hidden="true">✓</span>
+              </button>
+
+              <button class="sound-option" type="button" data-sound="silence" role="radio" aria-checked="false">
+                <span class="sound-symbol silence-symbol" aria-hidden="true">○</span>
+                <span class="sound-copy">
+                  <strong>Just silence</strong>
+                  <small>A space of your own</small>
+                </span>
+                <span class="sound-check" aria-hidden="true">✓</span>
+              </button>
+            </div>
+
+            <div class="sound-foot">
+              <span class="now-playing-dot" aria-hidden="true"></span>
+              <span id="sound-foot-label">Ready when you are</span>
+              <label class="volume-control" aria-label="Sound volume">
+                <span>VOL</span>
+                <input id="volume" type="range" min="0" max="100" value="35" />
+              </label>
+            </div>
+
+            <div class="sound-extras">
+              <label class="chime-toggle">
+                <input type="checkbox" id="chime-toggle" checked />
+                <span>Gentle bell when timer ends</span>
+              </label>
+              <span class="sound-note">Synthesized locally in your browser</span>
+            </div>
+          </aside>
+        </div>
+
+        <footer class="app-footer">
+          <span>One breath at a time.</span>
+          <div class="footer-links">
+            <a href="./privacy.html">Privacy</a>
+            <span class="footer-sep" aria-hidden="true">·</span>
+            <span>Made for your quiet moments</span>
+          </div>
+        </footer>
+      </section>
+
+      <section class="view rhythm-view" id="rhythm-view" aria-labelledby="rhythm-title">
+        <div class="rhythm-header">
+          <div class="rhythm-heading">
+            <p class="eyebrow">YOUR PRACTICE</p>
+            <h1 id="rhythm-title">A rhythm of<br /><em>returning.</em></h1>
+          </div>
+
+          <div class="rhythm-stats">
+            <div>
+              <span class="mini-label">THIS WEEK</span>
+              <strong id="rhythm-week">0<span> min</span></strong>
+            </div>
+            <div>
+              <span class="mini-label">CURRENT STREAK</span>
+              <strong id="current-streak">0<span> days</span></strong>
+            </div>
+            <div>
+              <span class="mini-label">LONGEST STREAK</span>
+              <strong id="best-streak">0<span> days</span></strong>
+            </div>
+            <div>
+              <span class="mini-label">MOST ACTIVE MONTH</span>
+              <strong class="month-stat" id="most-active-month">—</strong>
+              <span class="stat-detail" id="most-active-minutes">0 min</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="heatmap-card">
+          <div class="heatmap-top">
+            <div>
+              <p class="eyebrow">SHOWING UP, IN YOUR OWN WAY</p>
+              <h2 id="heatmap-title">Your practice</h2>
+            </div>
+            <div class="view-tabs" role="tablist" aria-label="History range">
+              <button class="view-tab" type="button" data-range="week" role="tab">Week</button>
+              <button class="view-tab" type="button" data-range="month" role="tab">Month</button>
+              <button class="view-tab selected" type="button" data-range="year" role="tab">Year</button>
+            </div>
+          </div>
+          <div id="heatmap-summary" class="heatmap-summary"></div>
+          <div class="heatmap-container" id="heatmap-container"></div>
+          <div class="heatmap-legend" aria-hidden="true">
+            <span>Less</span>
+            <i class="heat-level-0"></i>
+            <i class="heat-level-1"></i>
+            <i class="heat-level-2"></i>
+            <i class="heat-level-3"></i>
+            <i class="heat-level-4"></i>
+            <span>More</span>
+          </div>
+        </div>
+
+        <div class="history-bottom">
+          <div class="history-card">
+            <p class="eyebrow">TOTAL PRACTICE</p>
+            <strong id="total-minutes">0 <small>min</small></strong>
+            <span id="total-sessions">Your first session is waiting</span>
+          </div>
+          <div class="history-card">
+            <p class="eyebrow">LONGEST SESSION</p>
+            <strong id="longest-session">—</strong>
+            <span id="longest-session-detail">A little time, well spent</span>
+          </div>
+        </div>
+
+        <footer class="app-footer">
+          <span>One breath at a time.</span>
+          <div class="footer-links">
+            <a href="./privacy.html">Privacy</a>
+            <span class="footer-sep" aria-hidden="true">·</span>
+            <button class="link-button" id="back-to-practice" type="button">Back to practice</button>
+          </div>
+        </footer>
+      </section>
+
+      <nav class="bottom-nav" aria-label="Mobile navigation">
+        <button class="nav-item active" type="button" data-view="practice-view">
+          <span class="nav-glyph" aria-hidden="true">◉</span>
+          <span>Practice</span>
+        </button>
+        <button class="nav-item" type="button" data-view="rhythm-view">
+          <span class="nav-glyph" aria-hidden="true">▦</span>
+          <span>Your rhythm</span>
+        </button>
+      </nav>
+
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    </main>
+
+    <script src="./config.js"></script>
+    <script src="./cloud.js" defer></script>
+    <script src="./app.js" defer></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+  </body>
+</html>
